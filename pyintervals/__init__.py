@@ -136,7 +136,7 @@ class Interval(object):
         hour = int(hour)
         assert 0 <= hour <= 23
         minute = int(minute)
-        assert 0 <= hour <= 23
+        assert 0 <= minute <= 59
         self.at_time_sdl['minute'] = minute
         self.at_time_sdl['hour'] = hour
 
@@ -171,7 +171,7 @@ class Work(object):
             currentMinute= datetime.now().minute
             currentHour = datetime.now().hour
             currentDay = datetime.now().day
-            if self.interval.at_time_sdl['minute'] >= currentMinute and self.interval.at_time_sdl['hour']==currentHour and self.interval.last_time_run != currentDay:
+            if self.interval.at_time_sdl['minute'] > currentMinute and self.interval.at_time_sdl['hour']==currentHour and self.interval.last_time_run != currentDay:
                 self._func()
                 self.interval.last_time_run = currentDay
         elif self.interval.unit in ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']:
@@ -179,7 +179,7 @@ class Work(object):
             currentHour = datetime.now().hour
             currentDay = datetime.now().day
             currentWeekDay = datetime.now().weekday()
-            if self.interval.at_time_sdl['minute'] >= currentMinute and self.interval.at_time_sdl['hour']==currentHour and self.interval.period == currentWeekDay and self.interval.last_time_run != currentDay:
+            if self.interval.at_time_sdl['minute'] > currentMinute and self.interval.at_time_sdl['hour']==currentHour and self.interval.period == currentWeekDay and self.interval.last_time_run != currentDay:
                 self._func()
                 self.interval.last_time_run = currentDay
         self.ImBusy = False
